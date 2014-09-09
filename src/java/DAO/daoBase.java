@@ -3,6 +3,8 @@
 package DAO;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public  class daoBase {
     Connection conexion;
@@ -26,7 +28,11 @@ public  class daoBase {
         }
     }
     public void desconectar(){
-    
+        try {
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(daoBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
