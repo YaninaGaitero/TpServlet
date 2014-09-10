@@ -22,7 +22,9 @@ public class usuarioDAO extends daoBase implements IDAO<Usuario>{
     public void agregar(Usuario dato) {
     
         try {
+            conectar();
             sentencia.execute("Insert into usuarios (activo , administrador , apellido, nombre, dni )values( '" + dato.getActivo()+ "','" + dato.getAdministrador() + "','" + dato.getApellido()+ "','" + dato.getNombre()+ "')");
+            desconectar();
         } catch (SQLException ex) {
             System.out.println("Error al insertar el usuario");
         }
