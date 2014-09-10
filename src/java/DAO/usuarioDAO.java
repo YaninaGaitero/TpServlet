@@ -28,23 +28,51 @@ public class usuarioDAO extends daoBase implements IDAO<Usuario>{
         } catch (SQLException ex) {
             System.out.println("Error al insertar el usuario");
         }
-            
     }
     
 
     @Override
     public void modificar(Usuario dato) {
-       // sentencia.execute("UPDATE USUARIOS SET");
+       String query="UPDATE USUARIOS SET nombre = '" +dato.getNombre()+"',apellido = '" +dato.getApellido() +"',administrador= '" + dato.getAdministrador()+ "', dni= '" + dato.getDni()+"', activo = '"+ dato.getActivo()+"' where idUsuario= '" + dato.getIdUsuario()+"'";
+        try {
+            conectar();
+            sentencia.executeUpdate(query);
+            desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void eliminar(Usuario dato) {
-    
+        String query= "DELETE FROM USUARIOS WHERE IDUSUARIO ="+ dato.getIdUsuario();
+        try {
+            sentencia.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void buscarByID(int id) {
+    public Usuario buscarByID(int id) {
+    String query= "SELECT * FROM USUARIOS WHERE idUsuario =" +id;
+    Usuario usuario= new Usuario();
     
+        try {
+            resultado= sentencia.executeQuery(query);
+                while(resultado.next()){
+                    usuario.setIdUsuario(id);
+                    usuario.setDni(resultado.getInt(2));
+                    usuario.setApellido(resultado.getString(3));
+                    usuario.setNombre(resultado.getString(4));
+                    usuario.setActivo(resultado.getBoolean(5));
+                    usuario.setAdministrador(resultado.getBoolean(6));
+                    
+            }
+        } catch (SQLException ex) {
+            System.out.println("No se pudo obtener el usuario"+ ex.getMessage());
+        }
+        return usuario;
     }
 
     @Override

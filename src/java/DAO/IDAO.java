@@ -17,6 +17,6 @@ public interface IDAO <t>{
     public void agregar(t dato);
     public void modificar(t dato);
     public void eliminar(t dato);
-    public void buscarByID(int id);
+    public t buscarByID(int id);
     public Enumeration <t> traerTodos();
 }
