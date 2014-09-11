@@ -1,8 +1,7 @@
 
 
 package Entidades;
-
-class Producto {
+public class Producto {
     private int idProducto;
     private String descripcion;
     private Double precio;
