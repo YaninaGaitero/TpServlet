@@ -15,6 +15,7 @@ import java.util.Enumeration;
  */
 public class CComprasDAO extends daoBase implements IDAO<CCompras> {
     usuarioDAO usuarioDao= new usuarioDAO();
+    DComprasDAO dComprasDAO= new DComprasDAO();
 
     @Override
     public void agregar(CCompras dato) {
@@ -76,7 +77,7 @@ public class CComprasDAO extends daoBase implements IDAO<CCompras> {
                    */
             }
         } catch (Exception ex) {
-            System.out.println("No se pudo obtener el Usuario"+ ex.getMessage());
+            System.out.println("No se pudo obtener CCompras"+ ex.getMessage());
         }finally{
             desconectar();
         }
