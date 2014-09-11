@@ -46,6 +46,7 @@ public class ProductosDAO extends daoBase implements IDAO<Producto>{
         String query= "DELETE PROM PRODUCTOS WHERE idProducto=" +dato.getIdProducto();
         try{
             conectar();
+            sentencia.executeQuery(query);
         }catch(Exception ex){
             System.out.println("Error al eliminar el producto");
         }finally{
@@ -59,6 +60,7 @@ public class ProductosDAO extends daoBase implements IDAO<Producto>{
         Producto prod= new Producto();
     
         try {
+            conectar();
             resultado= sentencia.executeQuery(query);
                 while(resultado.next()){
                     prod.setIdProducto(resultado.getInt(1));
@@ -68,6 +70,8 @@ public class ProductosDAO extends daoBase implements IDAO<Producto>{
             }
         } catch (Exception ex) {
             System.out.println("No se pudo obtener el Producto"+ ex.getMessage());
+        }finally{
+            desconectar();
         }
         return prod;
 

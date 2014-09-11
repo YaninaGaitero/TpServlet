@@ -58,7 +58,30 @@ public class CComprasDAO extends daoBase implements IDAO<CCompras> {
 
     @Override
     public CCompras buscarByID(int id) {
-        return null;
+        CCompras ccompras= new CCompras();
+        Usuario usuario= new Usuario();
+        int idUsuario;
+        String query="SELECT * FROM CCOMPRAS WHERE idFactura=" +id;        
+        try {
+            conectar();
+            resultado= sentencia.executeQuery(query);
+                while(resultado.next()){
+                   ccompras.setIdFactura(resultado.getInt(1));
+                   idUsuario=resultado.getInt(2);
+                   ccompras.setFecha(resultado.getDate(3));
+                   usuario= usuarioDao.buscarByID(idUsuario);
+                   ccompras.setUsuario(usuario);
+                   /*
+                   FALTA LLENAR LA LISTA DE DETALLE DE LA FACTURA
+                   */
+            }
+        } catch (Exception ex) {
+            System.out.println("No se pudo obtener el Usuario"+ ex.getMessage());
+        }finally{
+            desconectar();
+        }
+        
+        return ccompras; 
     }
 
     @Override

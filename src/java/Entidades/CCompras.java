@@ -7,6 +7,7 @@
 package Entidades;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,8 @@ public class CCompras {
     private int idFactura;
     private Usuario usuario;
     private Date fecha;
+    private List<DCompras> detalle;
+    
 
     /**
      * @return the idFactura
@@ -57,6 +60,14 @@ public class CCompras {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public List<DCompras> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<DCompras> detalle) {
+        this.detalle = detalle;
     }
        
 }
