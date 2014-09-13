@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/subscribe.css" />
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            function ValidaUsuario()
+            {
+                alert("us");
+                document.getElementById("mi_form").submit();
+            }
+        </script>
+    </head>
+    <body>
+        <center><h1>  FERRETERIA PRUEBA </h1>
+        
+        
+            <br /><br />
+            <div>
+                <form action="ServletLogin" id="mi_form" method="POST">
+                    Usuario:
+                    <input type="text" name="Usuario"/><br />
+                    Contraseña
+                    <input type="password" name="pass"/>
+                    <br />
+                    <input type="button" name="enviar" value = "ingresar" onclick="ValidaUsuario()">
+                 </form>
+            </div>
+        </center>
+    </body>
+</html>
