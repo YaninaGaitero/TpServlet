@@ -9,6 +9,8 @@ public class Usuario {
     private int dni;
     private Boolean activo;
     private Boolean administrador;
+    private String User;
+    private String contraseña;
 
     /**
      * @return the idUsuario
@@ -92,5 +94,33 @@ public class Usuario {
      */
     public void setDni(int dni) {
         this.dni = dni;
+    }
+
+    /**
+     * @return the User
+     */
+    public String getUser() {
+        return User;
+    }
+
+    /**
+     * @param User the User to set
+     */
+    public void setUser(String User) {
+        this.User = User;
+    }
+
+    /**
+     * @return the contraseña
+     */
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    /**
+     * @param contraseña the contraseña to set
+     */
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 }
