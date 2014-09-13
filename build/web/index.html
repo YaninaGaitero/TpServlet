@@ -6,13 +6,31 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/subscribe.css" />
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            function ValidaUsuario()
+            {
+                alert("us");
+                document.getElementById("mi_form").submit();
+            }
+        </script>
     </head>
     <body>
-        <h1>  FERRETERIA PRUEBA </h1>
-        <a href="Logueo"> INGRESO A LA FERRETERIA </a>
-        <div>TODO write content</div>
+        <center><h1>  FERRETERIA PRUEBA </h1></center>
+        
+        
+        <br /><br />
+        <div>
+            <form action="ServletLogin" id="mi_form" method="POST">
+                Usuario:
+                <input type="text" name="Usuario"/><br />
+                Contraseña
+                <input type="password" name="pass"/>
+                <input type="button" name="enviar" value = "ingresar" onclick="ValidaUsuario()">
+             </form>
+        </div>
     </body>
 </html>
