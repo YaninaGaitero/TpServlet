@@ -14,7 +14,7 @@ import java.util.Enumeration;
  * @author Yanina
  */
 public class CComprasDAO extends daoBase implements IDAO<CCompras> {
-    usuarioDAO usuarioDao= new usuarioDAO();
+    usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
     DComprasDAO dComprasDAO= new DComprasDAO();
 
     @Override

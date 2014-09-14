@@ -11,6 +11,7 @@
         {
             alert('El nombre debe tener mas de 4 caracteres');
             document.getElementById('Nombre').focus();
+            return false;
         };
     }
 </script>
@@ -155,34 +156,34 @@ style.firebugResetStyles {
 <body>
 <div class="container">
 	<section id="content">
-		<form action="" name="RegitroUsrFrm">
+		<form action="Registro" name="RegitroUsrFrm" method="POST">
 			<h1>FERRETERIA ANTUNEZ</h1>
 			<div>
-                <input placeholder="Nombre" required="" id="Nombre" type="text"  onselect= "ValidaUsr()">
+                <input placeholder="Nombre" required="" name="Nombre" type="text" >
             </div>
 
             <div>
-                <input placeholder="Apellido" required="" id="Apellido" type="text">
+                <input placeholder="Apellido" required="" name="Apellido" type="text">
             </div>
 
             <div>
-                <input placeholder="DNI" required="" id="DNI" type="text">
+                <input placeholder="DNI" required="" name="DNI" type="text">
             </div>
 
             <div>
-				<input placeholder="Usuario" required="" id="Username" type="text">
+				<input placeholder="Usuario" required="" name="Username" type="text">
 			</div>
 			<div>
-				<input placeholder="Contraseña" required="" id="password" type="password">
+				<input placeholder="Contraseña" required="" name="password" type="password">
 			</div>
 			<div>
 				<center>
-                    <input value="ENVIAR DATOS" type="button" onclick="ValidaUsr()" >
+                    <input value="ENVIAR DATOS" name ="enviardatos" type="submit">
                     <a href ="../TpServlets/"> VOLVER </a>
                 </center>
 				
 				
-			</div>
+			</div>   
 		</form><!-- form -->
 		<div class="button">
 			

@@ -4,8 +4,12 @@
  */
 package Controladora;
 
+import DAO.usuarioDAO;
+import Entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ezequiel
  */
-@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
-public class NewServlet extends HttpServlet {
-
+@WebServlet(name = "Registro", urlPatterns = {"/Registro"})
+public class Registro extends HttpServlet {
+    usuarioDAO DaoUsr = usuarioDAO.DameInstancia();
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -38,13 +42,13 @@ public class NewServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");            
+            out.println("<title>Servlet Registro</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Registro at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
         }
     }
@@ -77,7 +81,25 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            Usuario usrReg = new Usuario();
+            usrReg.setApellido(request.getParameter("Apellido"));
+            usrReg.setContraseña(request.getParameter("password"));
+            usrReg.setDni(Integer.parseInt(request.getParameter("DNI")));
+            usrReg.setNombre(request.getParameter("Nombre"));
+            usrReg.setUser(request.getParameter("Username"));
+            usrReg.setActivo(true);
+            usrReg.setAdministrador(false);
+            DaoUsr.agregar(usrReg);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Registro.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+
+
     }
 
     /**

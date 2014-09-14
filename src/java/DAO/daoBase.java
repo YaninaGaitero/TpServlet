@@ -13,18 +13,22 @@ public  class daoBase {
     public static void cargarDriver(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-        }catch(Exception e){
-            System.out.println("No se pudo cargar el driver");
+        }catch(Exception e)
+        {   
+            
+            System.out.println("No se pudo cargar el driver " + e.getMessage());
         }
     }
     
     public  void conectar(){
         try{
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/phpmyadmin/tpServlets", "", "");
+            String url = "jdbc:mysql://127.0.0.1/tpservlets";
+            conexion = DriverManager.getConnection(url, "root", "");
             sentencia= conexion.createStatement();
             System.out.println("Conexion exitosa con la bbdd");
         }catch (Exception e){
-            System.out.println("No es posible establecer conexion con la bbdd");
+            String mensaje = e.getMessage();
+            System.out.println("No es posible establecer conexion con la bbdd " + e.getMessage());
         }
     }
     public void desconectar(){
