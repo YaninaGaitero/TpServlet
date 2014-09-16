@@ -8,49 +8,59 @@ package DAO;
 
 import java.util.Enumeration;
 import Entidades.Producto;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author alumno
  */
-public class ProductosDAO extends daoBase implements IDAO<Producto>{
+public class ProductosDAO extends BASEDAO implements IDAO<Producto>{
+    
+    static ProductosDAO prodDao;
+    public static ProductosDAO dameInstancia(){
+        if(prodDao==null){
+            try {
+                prodDao= new ProductosDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return prodDao;
+    }
+    
+    public ProductosDAO () throws Exception{
+        super();
+    }
 
     @Override
     public void agregar(Producto dato) {
-        try{
-            conectar();
-            String query="Insert into Producto(descripcion, precio,stock)values ('" + dato.getDescripcion()+","+dato.getPrecio()+","+ dato.getStock()+")";
-            sentencia.execute(query);
-        }catch(Exception e){
-            System.out.println("Error al insertar el producto");
-        }finally{
-            desconectar();
+        String query= "INSERT INTO PRODUCTOS (DESCRIPCION, PRECIO, STOCK) VALUES ('" +dato.getDescripcion() +"'," + dato.getPrecio() + "," +dato.getStock()+")";
+        try {
+            int filas= actualizar(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void modificar(Producto dato) {
         String query="Update Productos set descripcion ='"+dato.getDescripcion()+ "',precio =" +dato.getPrecio() + ",stock="+dato.getStock()+ "where idProducto= "+dato.getIdProducto();
-        try{
-            conectar();
-            sentencia.executeUpdate(query);
-        }catch(Exception e){
-            System.out.println("Error al modificar el producto");
-        }finally{
-            desconectar();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void eliminar(Producto dato) {
-        String query= "DELETE PROM PRODUCTOS WHERE idProducto=" +dato.getIdProducto();
-        try{
-            conectar();
-            sentencia.executeQuery(query);
-        }catch(Exception ex){
-            System.out.println("Error al eliminar el producto");
-        }finally{
-            desconectar();
+       String query = "DELETE FROM productos WHERE idproducto =" + dato.getIdProducto();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -58,28 +68,27 @@ public class ProductosDAO extends daoBase implements IDAO<Producto>{
     public Producto buscarByID(int id) {
         String query= "SELECT * FROM USUARIOS WHERE idUsuario =" +id;
         Producto prod= new Producto();
-    
         try {
             conectar();
-            resultado= sentencia.executeQuery(query);
-                while(resultado.next()){
-                    prod.setIdProducto(resultado.getInt(1));
-                    prod.setDescripcion(resultado.getString(2));
-                    prod.setPrecio(resultado.getDouble(3));
-                    prod.setStock(resultado.getInt(4));
+            ResultSet rs= consultar(crearSentencia(query));
+            while(rs.next()){
+                prod.setIdProducto(rs.getInt("idProducto"));
+                prod.setDescripcion(rs.getString("descripcion"));
+                prod.setPrecio(rs.getDouble("precio"));
+                prod.setStock(rs.getInt("stock"));
             }
+            
         } catch (Exception ex) {
-            System.out.println("No se pudo obtener el Producto"+ ex.getMessage());
-        }finally{
-            desconectar();
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return prod;
-
     }
 
     @Override
     public Enumeration<Producto> traerTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+ 
     
 }

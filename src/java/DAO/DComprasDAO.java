@@ -7,13 +7,31 @@
 package DAO;
 import Entidades.DCompras;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Yanina
  */
-public class DComprasDAO extends daoBase implements IDAO<DCompras> {
-    ProductosDAO prodDao= new ProductosDAO();
-    @Override
+public class DComprasDAO extends BASEDAO implements IDAO<DCompras> {
+    
+    ProductosDAO prodDao= ProductosDAO.dameInstancia();
+    static DComprasDAO dComdao= DComprasDAO.dameInstancia();
+    
+        public static DComprasDAO dameInstancia(){
+        if(dComdao==null){
+            try {
+                dComdao= new DComprasDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return dComdao;
+    }
+        public DComprasDAO() throws Exception{
+            super();
+        }
+    /*@Override
     public void agregar(DCompras dato) {
         throw new UnsupportedOperationException("No es posible insertar un dcompras sin idFactura");
     }
@@ -81,6 +99,51 @@ public class DComprasDAO extends daoBase implements IDAO<DCompras> {
     @Override
     public Enumeration<DCompras> traerTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
+
+    @Override
+    public void agregar(DCompras dato) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    public void agregar(DCompras dato, int idFactura){
+        String query="INSERT INTO DCOMPRAS(facturaID, importe, cantidad, productoid) values ("+idFactura + ","+ dato.getImporte() +","+dato.getCantidad()+","+dato.getProducto().getIdProducto()+")";
+        try {
+            int filas= actualizar(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void modificar(DCompras dato) {
+        String query="Update DCompras set importe= "+ dato.getImporte() + ",cantidad=" + dato.getcCompras()+",productoid="+ dato.getProducto().getIdProducto()+ "where idDetalle=" +dato.getIdDetalle();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void eliminar(DCompras dato) {
+        try {
+            String query= "DELETE PROM DCompras WHERE idDetalle=" +dato.getIdDetalle();
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public DCompras buscarByID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Enumeration<DCompras> traerTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
 }

@@ -8,37 +8,34 @@ package DAO;
 import Entidades.CCompras;
 import Entidades.Usuario;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Yanina
  */
-public class CComprasDAO extends daoBase implements IDAO<CCompras> {
-
-    @Override
-    public void agregar(CCompras dato) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
+    static CComprasDAO ccompDAO;
+    usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
+    DComprasDAO dcomDAO= DComprasDAO.dameInstancia();
+    
+    public static CComprasDAO dameInstancia(){
+        if(ccompDAO==null){
+            try {
+                ccompDAO= new CComprasDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ccompDAO;
+    }
+    
+    public CComprasDAO () throws Exception{
+        super();
     }
 
-    @Override
-    public void modificar(CCompras dato) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public void eliminar(CCompras dato) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public CCompras buscarByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Enumeration<CCompras> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
    // usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
     /*
     usuarioDAO usuarioDao= new usuarioDAO();
@@ -116,5 +113,45 @@ public class CComprasDAO extends daoBase implements IDAO<CCompras> {
     public Enumeration<CCompras> traerTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
+
+    @Override
+    public void agregar(CCompras dato) {
+       String query="INSERT INTO CCOMPRAS(usuarioID, fecha) values("+dato.getUsuario().getIdUsuario() +","+dato.getFecha() +")";
+        try {
+            int filas= actualizar(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void modificar(CCompras dato) {
+        String query="Update CCompras set usuarioID= " +dato.getUsuario().getIdUsuario() + ", fecha= "+ dato.getFecha();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void eliminar(CCompras dato) {
+      String query= "DELETE PROM CCompras WHERE idFactura=" +dato.getUsuario().getIdUsuario();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public CCompras buscarByID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Enumeration<CCompras> traerTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
