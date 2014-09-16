@@ -100,7 +100,7 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
     }
     
     public Boolean validaLogIn(String usuario , String pass){
-        String query= "SELECT * FROM USUARIOS WHERE usuario = '" +usuario +"' and pass= '" + pass +"'" ;
+        String query= "SELECT * FROM USUARIOS WHERE usuario like '" +usuario +"' and pass like '" + pass +"'" ;
         ResultSet rs;
         try {
             conectar();

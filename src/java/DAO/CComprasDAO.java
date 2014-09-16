@@ -20,6 +20,7 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
     usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
     DComprasDAO dcomDAO= DComprasDAO.dameInstancia();
     
+    
     public static CComprasDAO dameInstancia(){
         if(ccompDAO==null){
             try {

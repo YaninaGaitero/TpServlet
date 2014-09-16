@@ -3,16 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/DAO/DComprasDAO.java</file>
-            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/DAO/CComprasDAO.java</file>
-            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/DAO/ProductosDAO.java</file>
+            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/web/Registro.html</file>
+            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/Controladora/Logueo.java</file>
             <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/Controladora/Registro.java</file>
             <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/web/index.html</file>
-=======
-            <file>file:/C:/Users/Ezequiel/Documents/GitHub/TpServlet/src/java/DAO/daoBase.java</file>
-            <file>file:/C:/Users/Ezequiel/Documents/GitHub/TpServlet/src/java/Controladora/Logueo.java</file>
->>>>>>> origin/master
+            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/web/index.jsp</file>
+            <file>file:/C:/Users/Yanina/Documents/GitHub/TpServlet/src/java/DAO/usuarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

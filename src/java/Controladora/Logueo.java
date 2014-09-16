@@ -218,13 +218,13 @@ public class Logueo extends HttpServlet {
                     + "		<form action=\"Logueo\" method =\"POST\">\n"
                     + "			<h1>FERRETERIA ANTUNEZ</h1>\n"
                     + "			<div>\n"
-                    + "				<input placeholder=\"Usuario\" required=\"\" id=\"username\" type=\"text\">\n"
+                    + "				<input placeholder=\"Usuario\" required=\"\" name =\"Usuario\"id=\"username\" type=\"text\"/>\n"
                     + "			</div>\n"
                     + "			<div>\n"
-                    + "				<input placeholder=\"Contraseña\" required=\"\" id=\"password\" type=\"password\">\n"
+                    + "				<input placeholder=\"Contraseña\" required=\"\" name =\"Pass\" id=\"password\" type=\"password\"/>\n"
                     + "			</div>\n"
                     + "			<div>\n"
-                    + "				<input value=\"INGRESAR\" type=\"submit\">\n"
+                    + "				<input value=\"INGRESAR\" type=\"submit\"/>\n"
                     + "				\n"
                     + "				<a href =\"../TpServlets/Registro.html\"> REGISTRAR </a>\n"
                     + "			</div>\n"
@@ -275,8 +275,12 @@ public class Logueo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        processRequest(request, response);
-        //Boolean rta =datosUsr.validaLogIn(request.getParameter("Usuario"), request.getParameter("Contraseña") );
+        
+        //processRequest(request, response);
+        String nombre = request.getParameter("Usuario");
+        String password =request.getParameter("Pass");
+        Boolean rta =datosUsr.validaLogIn(request.getParameter("Usuario"), request.getParameter("Pass") );
+        System.out.println("Rta"+ rta);
     }
 
     /**
