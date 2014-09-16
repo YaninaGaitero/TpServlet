@@ -14,7 +14,34 @@ import java.util.Enumeration;
  * @author Yanina
  */
 public class CComprasDAO extends daoBase implements IDAO<CCompras> {
-    usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
+
+    @Override
+    public void agregar(CCompras dato) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modificar(CCompras dato) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminar(CCompras dato) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CCompras buscarByID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Enumeration<CCompras> traerTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   // usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
+    /*
+    usuarioDAO usuarioDao= new usuarioDAO();
     DComprasDAO dComprasDAO= new DComprasDAO();
 
     @Override
@@ -75,7 +102,7 @@ public class CComprasDAO extends daoBase implements IDAO<CCompras> {
                    /*
                    FALTA LLENAR LA LISTA DE DETALLE DE LA FACTURA
                    */
-            }
+            /*}
         } catch (Exception ex) {
             System.out.println("No se pudo obtener CCompras"+ ex.getMessage());
         }finally{
@@ -88,6 +115,6 @@ public class CComprasDAO extends daoBase implements IDAO<CCompras> {
     @Override
     public Enumeration<CCompras> traerTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
     
 }

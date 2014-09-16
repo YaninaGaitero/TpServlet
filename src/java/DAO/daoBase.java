@@ -10,7 +10,7 @@ public  class daoBase {
     Connection conexion;
     Statement sentencia;
     ResultSet resultado;
-    public static void cargarDriver(){
+    public daoBase(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
         }catch(Exception e)
@@ -22,7 +22,7 @@ public  class daoBase {
     
     public  void conectar(){
         try{
-            String url = "jdbc:mysql://127.0.0.1/tpservlets";
+            String url = "jdbc:mysql://localhost:3306/TpServlets";
             conexion = DriverManager.getConnection(url, "root", "");
             sentencia= conexion.createStatement();
             System.out.println("Conexion exitosa con la bbdd");

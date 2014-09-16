@@ -6,6 +6,7 @@
 package DAO;
 
 import Entidades.Usuario;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -15,27 +16,34 @@ import java.util.logging.Logger;
  *
  * @author alumno
  */
-public class usuarioDAO extends daoBase implements IDAO<Usuario> {
+public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
 
-    private usuarioDAO() {
+    public usuarioDAO()throws Exception{
+        super();
     }
-    static usuarioDAO usrDao;
+   static usuarioDAO usrDao;
 
       public static usuarioDAO DameInstancia() {
         if (usrDao == null) {
-            usrDao = new usuarioDAO();
+            try {
+                usrDao = new usuarioDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return usrDao;
-    }
+    }/*
 
     @Override
     public void agregar(Usuario dato) {
 
         try {
             conectar();
-            sentencia.execute("Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, contraseña"
-                    + ")values( '" + dato.getActivo() + "','" + dato.getAdministrador() + "','"
-                    + dato.getApellido() + "','" + dato.getNombre() + "','" + dato.getUser() + "','" + dato.getContraseña() + "')");
+          String sentencia= "Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, pass"
+                    + ")values( " + dato.getActivo() + "," + dato.getAdministrador() + ",'"
+                    + dato.getApellido() + "','" + dato.getNombre() + "','" + dato.getUser() + "','" + dato.getContraseña() + "')";
+            PreparedStatement d = conexion.prepareStatement(sentencia);
+            d.executeUpdate();
 
         } catch (SQLException ex) {
             System.out.println("Error al insertar el usuario ("+ex.getMessage()+")");
@@ -92,5 +100,57 @@ public class usuarioDAO extends daoBase implements IDAO<Usuario> {
     public Enumeration<Usuario> traerTodos() {
         //Enumerator 
         return null;
+    }*/
+
+    @Override
+    public void agregar(Usuario dato) {
+        String sentencia= "Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, pass"
+                    + ")values( " +dato.getActivo() +","+ dato.getActivo() +",'"
+                    + dato.getApellido() + "','" + dato.getNombre() + "',"+dato.getDni()+",'" + dato.getUser() + "','" + dato.getContraseña() + "')";
+        try{
+        
+        int y=actualizar(crearSentencia(sentencia));
+        
+        }catch(Exception e){
+            
+        }
+    }
+
+    @Override
+    public void modificar(Usuario dato) {
+        String query = "UPDATE USUARIOS SET nombre = '" + dato.getNombre() + "',apellido = '" + dato.getApellido() + "',administrador= " + dato.getAdministrador() + ", dni= '" + dato.getDni() + ", activo = " + dato.getActivo() + " where idUsuario= " + dato.getIdUsuario();
+        try{
+            int y= actualizar(crearSentencia(query));
+        }catch(Exception e){
+        
+        }
+    
+    }
+
+    @Override
+    public void eliminar(Usuario dato) {
+
+    }
+
+    @Override
+    public Usuario buscarByID(int id) {
+        try {
+            Usuario us= new Usuario();
+             String query = "SELECT * FROM USUARIOS WHERE idUsuario =" + id;
+            conectar();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public Enumeration<Usuario> traerTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Boolean validaLogIn(String usuario , String pass){
+    return true;
     }
 }
