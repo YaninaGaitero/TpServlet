@@ -83,6 +83,7 @@ public class Registro extends HttpServlet {
             throws ServletException, IOException {
         try {
             Usuario usrReg = new Usuario();
+            
             usrReg.setApellido(request.getParameter("Apellido"));
             usrReg.setContraseña(request.getParameter("password"));
             usrReg.setDni(Integer.parseInt(request.getParameter("DNI")));

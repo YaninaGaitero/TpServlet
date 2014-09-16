@@ -34,6 +34,7 @@ public class Logueo extends HttpServlet {
         {
             datosUsr = usuarioDAO.DameInstancia();
             datosUsr.conectar();
+            
         } catch (Exception ex)
         {
             Logger.getLogger(Logueo.class.getName()).log(Level.SEVERE, null, ex);
