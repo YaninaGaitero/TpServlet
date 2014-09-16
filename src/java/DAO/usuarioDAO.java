@@ -7,6 +7,7 @@ package DAO;
 
 import Entidades.Usuario;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -120,7 +121,7 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
     public void modificar(Usuario dato) {
         String query = "UPDATE USUARIOS SET nombre = '" + dato.getNombre() + "',apellido = '" + dato.getApellido() + "',administrador= " + dato.getAdministrador() + ", dni= '" + dato.getDni() + ", activo = " + dato.getActivo() + " where idUsuario= " + dato.getIdUsuario();
         try{
-            int y= actualizar(crearSentencia(query));
+            ejecutarQuery(crearSentencia(query));
         }catch(Exception e){
         
         }
@@ -129,20 +130,36 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
 
     @Override
     public void eliminar(Usuario dato) {
-
+        String query = "DELETE FROM USUARIOS WHERE IDUSUARIO =" + dato.getIdUsuario();
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public Usuario buscarByID(int id) {
+       Usuario us= new Usuario();
+       String query = "SELECT * FROM USUARIOS WHERE idUsuario =" + id;
         try {
-            Usuario us= new Usuario();
-             String query = "SELECT * FROM USUARIOS WHERE idUsuario =" + id;
             conectar();
+            ResultSet rs= consultar(crearSentencia(query));
+            while(rs.next()){
+                us.setIdUsuario(rs.getInt("idUsuario"));
+                us.setNombre(rs.getString("nombre"));
+                us.setApellido(rs.getString("apellido"));
+                us.setUser(rs.getString("usuario"));
+                us.setContraseña(rs.getString("pass"));
+                us.setDni(rs.getInt("dni"));
+                us.setActivo(rs.getBoolean("activo"));
+                us.setAdministrador(rs.getBoolean("administrador"));
+            }
             
         } catch (Exception ex) {
             Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return us;
     }
 
     @Override
@@ -151,6 +168,18 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
     }
     
     public Boolean validaLogIn(String usuario , String pass){
-    return true;
+        String query= "SELECT * FROM USUARIOS WHERE usuario = '" +usuario +"' and pass= '" + pass +"'" ;
+        ResultSet rs;
+        try {
+            conectar();
+            rs=consultar(crearSentencia(query));
+            if(rs.next()){
+                return true;
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
