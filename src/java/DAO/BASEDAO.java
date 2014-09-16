@@ -66,6 +66,21 @@ public class BASEDAO {
         }
     }
     
+    public void ejecutarQuery(PreparedStatement sentencia) throws Exception
+    {
+        try
+        {
+            conectar();
+            sentencia.executeQuery();
+            desconectar();
+            
+        } catch (Exception e)
+        {
+            throw new Exception("Error al ejecutar consulta" + e.getMessage());
+        }
+    }
+
+    
     public void consultar_bd(PreparedStatement s)
     {
         try
