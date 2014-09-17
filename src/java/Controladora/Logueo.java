@@ -280,6 +280,9 @@ public class Logueo extends HttpServlet {
         String nombre = request.getParameter("Usuario");
         String password =request.getParameter("Pass");
         Boolean rta =datosUsr.validaLogIn(request.getParameter("Usuario"), request.getParameter("Pass") );
+        if(rta){
+            response.sendRedirect("Panel");
+        }
         System.out.println("Rta"+ rta);
     }
 
