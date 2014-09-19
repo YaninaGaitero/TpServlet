@@ -275,12 +275,13 @@ public class Logueo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        
+        HttpSession session = request.getSession();
         //processRequest(request, response);
         String nombre = request.getParameter("Usuario");
         String password =request.getParameter("Pass");
         Boolean rta =datosUsr.validaLogIn(request.getParameter("Usuario"), request.getParameter("Pass") );
         if(rta){
+            session.setAttribute("usuario", nombre);
             response.sendRedirect("Panel");
         }
         System.out.println("Rta"+ rta);
