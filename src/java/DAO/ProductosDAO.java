@@ -9,6 +9,7 @@ package DAO;
 import java.util.Enumeration;
 import Entidades.Producto;
 import java.sql.ResultSet;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,8 +86,26 @@ public class ProductosDAO extends BASEDAO implements IDAO<Producto>{
     }
 
     @Override
-    public Enumeration<Producto> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Hashtable traerTodos() {
+      Hashtable hash = new Hashtable();
+        String query = "SELECT * FROM PRODUCTOS";
+        try {
+            conectar();
+            ResultSet rs = consultar(crearSentencia(query));
+            while (rs.next()) {
+                Producto prod = new Producto();
+                prod.setIdProducto(rs.getInt("idProducto"));
+                prod.setDescripcion(rs.getString("Descripcion"));
+                prod.setPrecio(rs.getDouble("Precio"));
+                prod.setStock(rs.getInt("Stock"));
+                hash.put(rs.getInt("idProducto"), prod);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return hash;
     }
 
  

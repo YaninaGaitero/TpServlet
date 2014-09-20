@@ -18,5 +18,5 @@ public interface IDAO <t>{
     public void modificar(t dato);
     public void eliminar(t dato);
     public t buscarByID(int id);
-    public Enumeration <t> traerTodos();
+    public Hashtable traerTodos();
 }

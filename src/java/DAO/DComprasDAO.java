@@ -60,9 +60,9 @@ public class DComprasDAO extends BASEDAO {
         }
     }
 
-    public void eliminar(DCompras dato, int idFactura) {
+    public void eliminar(DCompras dato, CCompras factura) {
         try {
-            String query = "DELETE PROM DCompras WHERE productoid=" + dato.getProducto().getIdProducto() + "and facturaid=" + idFactura;
+            String query = "DELETE PROM DCompras WHERE productoid=" + dato.getProducto().getIdProducto() + "and facturaid=" + factura.getIdFactura();
             ejecutarQuery(crearSentencia(query));
         } catch (Exception ex) {
             Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,7 +89,7 @@ public class DComprasDAO extends BASEDAO {
         return detalle;
     }
 
-    public Enumeration traeDetalleDeFactura(CCompras cCom) {
+    public Hashtable traeDetalleDeFactura(CCompras cCom) {
         Hashtable hash = new Hashtable();
         String query = "SELECT * FROM DCOMPRAS WHERE facturaid= " + cCom.getIdFactura();
         try {
@@ -110,7 +110,7 @@ public class DComprasDAO extends BASEDAO {
             Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       return hash.elements();
+       return hash;
     }
 
 }

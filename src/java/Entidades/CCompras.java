@@ -7,6 +7,8 @@
 package Entidades;
 
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public class CCompras {
     private int idFactura;
     private Usuario usuario;
     private Date fecha;
-    private List<DCompras> detalle;
+    private Hashtable detalle;
     
 
     /**
@@ -62,12 +64,25 @@ public class CCompras {
         this.fecha = fecha;
     }
 
-    public List<DCompras> getDetalle() {
+    public Hashtable getDetalle() {
         return detalle;
     }
 
-    public void setDetalle(List<DCompras> detalle) {
+    public void setDetalle(Hashtable detalle) {
         this.detalle = detalle;
     }
+    public Double calcularTotal(){
+        Double total=0d;
+        Enumeration claves = detalle.keys();
+        DCompras dCompras= new DCompras();
+        while(claves.hasMoreElements()){
+            int clave= (int)claves.nextElement();
+            dCompras= (DCompras)detalle.get(clave);
+            total= total+(dCompras.getImporte()* dCompras.getCantidad());
+        }
+        return total;
+    }
+
+
        
 }

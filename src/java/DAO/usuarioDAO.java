@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,8 +96,32 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
     }
 
     @Override
-    public Enumeration<Usuario> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Hashtable traerTodos() {
+        Hashtable hash = new Hashtable();
+        String query = "SELECT * FROM Usuarios " ;
+        try {
+            conectar();
+            ResultSet rs = consultar(crearSentencia(query));
+            while (rs.next()) {
+                Usuario usuario= new Usuario();
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuario.setNombre(rs.getString("Nombre"));
+                usuario.setApellido(rs.getString("Apellido"));
+                usuario.setUser(rs.getString("usuario"));
+                usuario.setContraseña(rs.getString("pass"));
+                usuario.setActivo(rs.getBoolean("Activo"));
+                usuario.setAdministrador(rs.getBoolean("Administrador"));
+                usuario.setDni(rs.getInt("dni"));
+
+                
+                hash.put(rs.getInt("idUsuario"), usuario);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return hash;
     }
     
     public Boolean validaLogIn(String usuario , String pass){

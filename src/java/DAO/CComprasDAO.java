@@ -10,6 +10,7 @@ import Entidades.DCompras;
 import Entidades.Usuario;
 import java.sql.ResultSet;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
     static CComprasDAO ccompDAO;
     usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
     DComprasDAO dcomDAO= DComprasDAO.dameInstancia();
+    DComprasDAO dcomprasDao= DComprasDAO.dameInstancia();
     
     
     public static CComprasDAO dameInstancia(){
@@ -64,9 +66,15 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
       String query= "DELETE PROM CCompras WHERE idFactura=" +dato.getUsuario().getIdUsuario();
         try {
             ejecutarQuery(crearSentencia(query));
-            for(DCompras d: dato.getDetalle()){
-                dcomDAO.eliminar(d, dato.getIdFactura());
+            Enumeration claves= dato.getDetalle().keys();
+            Hashtable detalle= dato.getDetalle();
+            while(claves.hasMoreElements()){
+                int clave=(int)claves.nextElement();
+                dcomDAO.eliminar((DCompras)detalle.get(clave), dato);
             }
+           /* for(DCompras d: dato.getDetalle()){
+                dcomDAO.eliminar(d, dato.getIdFactura());
+            }*/
         } catch (Exception ex) {
             Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,8 +101,29 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
     }
 
     @Override
-    public Enumeration<CCompras> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Hashtable traerTodos() {
+        Hashtable hash = new Hashtable();
+        String query = "SELECT * FROM CCOMPRAS ";
+        try {
+            conectar();
+            ResultSet rs = consultar(crearSentencia(query));
+            int idUsuario;
+            while (rs.next()) {
+
+                CCompras CC = new CCompras();
+                CC.setIdFactura(rs.getInt("idFactura"));
+                idUsuario= rs.getInt("UsuarioId");
+                CC.setUsuario(usuarioDao.buscarByID(idUsuario));
+                CC.setFecha(rs.getDate("Fecha"));
+                CC.setDetalle(dcomprasDao.traeDetalleDeFactura(CC));
+                
+                hash.put(rs.getInt("IDDetalle"), CC);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return hash;
     }
-    
-}
+}    
