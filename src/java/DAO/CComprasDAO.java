@@ -6,7 +6,9 @@
 
 package DAO;
 import Entidades.CCompras;
+import Entidades.DCompras;
 import Entidades.Usuario;
+import java.sql.ResultSet;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,84 +39,6 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
     }
 
 
-   // usuarioDAO usuarioDao= usuarioDAO.DameInstancia();
-    /*
-    usuarioDAO usuarioDao= new usuarioDAO();
-    DComprasDAO dComprasDAO= new DComprasDAO();
-
-    @Override
-    public void agregar(CCompras dato) {
-        try{
-            conectar();
-            Usuario usuario= usuarioDao.buscarByID(dato.getUsuario().getIdUsuario());
-            String query="INSERT INTO CCOMPRAS(usuarioID, fecha) values("+dato.getUsuario().getIdUsuario() +","+dato.getFecha() +")";
-            sentencia.execute(query);
-        }catch(Exception e){
-            System.out.println("Error al insertar CCompras");
-        }finally{
-            desconectar();
-        }
-    }
-
-    @Override
-    public void modificar(CCompras dato) {
-       String query="Update CCompras set usuarioID= " +dato.getUsuario().getIdUsuario() + ", fecha= "+ dato.getFecha();
-        try{
-            conectar();
-            sentencia.executeUpdate(query);
-        }catch(Exception e){
-            System.out.println("Error al modificar CCompras");
-        }finally{
-            desconectar();
-        }
-    }
-
-    @Override
-    public void eliminar(CCompras dato) {
-        String query= "DELETE PROM CCompras WHERE idFactura=" +dato.getUsuario().getIdUsuario();
-        try{
-            conectar();
-            sentencia.executeQuery(query);
-        }catch(Exception ex){
-            System.out.println("Error al eliminar CCompras");
-        }finally{
-            desconectar();
-        }
-    }
-
-    @Override
-    public CCompras buscarByID(int id) {
-        CCompras ccompras= new CCompras();
-        Usuario usuario= new Usuario();
-        int idUsuario;
-        String query="SELECT * FROM CCOMPRAS WHERE idFactura=" +id;        
-        try {
-            conectar();
-            resultado= sentencia.executeQuery(query);
-                while(resultado.next()){
-                   ccompras.setIdFactura(resultado.getInt(1));
-                   idUsuario=resultado.getInt(2);
-                   ccompras.setFecha(resultado.getDate(3));
-                   usuario= usuarioDao.buscarByID(idUsuario);
-                   ccompras.setUsuario(usuario);
-                   /*
-                   FALTA LLENAR LA LISTA DE DETALLE DE LA FACTURA
-                   */
-            /*}
-        } catch (Exception ex) {
-            System.out.println("No se pudo obtener CCompras"+ ex.getMessage());
-        }finally{
-            desconectar();
-        }
-        
-        return ccompras; 
-    }
-
-    @Override
-    public Enumeration<CCompras> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
     @Override
     public void agregar(CCompras dato) {
        String query="INSERT INTO CCOMPRAS(usuarioID, fecha) values("+dato.getUsuario().getIdUsuario() +","+dato.getFecha() +")";
@@ -140,6 +64,9 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
       String query= "DELETE PROM CCompras WHERE idFactura=" +dato.getUsuario().getIdUsuario();
         try {
             ejecutarQuery(crearSentencia(query));
+            for(DCompras d: dato.getDetalle()){
+                dcomDAO.eliminar(d, dato.getIdFactura());
+            }
         } catch (Exception ex) {
             Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -147,7 +74,22 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
 
     @Override
     public CCompras buscarByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CCompras comp= new CCompras();
+        String query= "SELECT * FROM CCOMPRAS WHERE idFactura="+id;
+                try {
+            conectar();
+            ResultSet rs= consultar(crearSentencia(query));
+            while(rs.next()){
+               comp.setIdFactura(rs.getInt("idFactura"));
+               comp.setFecha(rs.getDate("fecha"));
+               comp.setUsuario(usuarioDao.buscarByID(rs.getInt("usuarioID")));
+               comp.setDetalle(null);
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return comp;
     }
 
     @Override

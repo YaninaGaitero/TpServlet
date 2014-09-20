@@ -3,147 +3,116 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DAO;
+
+import Entidades.CCompras;
 import Entidades.DCompras;
+import Entidades.Producto;
+import java.sql.ResultSet;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Yanina
  */
-public class DComprasDAO extends BASEDAO implements IDAO<DCompras> {
-    
-    ProductosDAO prodDao= ProductosDAO.dameInstancia();
-    static DComprasDAO dComdao= DComprasDAO.dameInstancia();
-    
-        public static DComprasDAO dameInstancia(){
-        if(dComdao==null){
+public class DComprasDAO extends BASEDAO {
+
+    ProductosDAO prodDao = ProductosDAO.dameInstancia();
+    static DComprasDAO dComdao = DComprasDAO.dameInstancia();
+
+    public static DComprasDAO dameInstancia() {
+        if (dComdao == null) {
             try {
-                dComdao= new DComprasDAO();
+                dComdao = new DComprasDAO();
             } catch (Exception ex) {
                 Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return dComdao;
     }
-        public DComprasDAO() throws Exception{
-            super();
-        }
-    /*@Override
+
+    public DComprasDAO() throws Exception {
+        super();
+    }
+
     public void agregar(DCompras dato) {
-        throw new UnsupportedOperationException("No es posible insertar un dcompras sin idFactura");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void agregar(DCompras dato, Integer idFactura){
-    try{
-            conectar();
-            String query="INSERT INTO DCOMPRAS(facturaID, importe, cantidad, productoid) values ("+idFactura + ","+ dato.getImporte() +","+dato.getCantidad()+","+dato.getProducto().getIdProducto()+")";
-            sentencia.execute(query);
-        }catch(Exception e){
-            System.out.println("Error al insertar DCompras");
-        }finally{
-            desconectar();
-        }
-    }
-    @Override
-    public void modificar(DCompras dato) {
-       String query="Update DCompras set importe= "+ dato.getImporte() + ",cantidad=" + dato.getcCompras()+",productoid="+ dato.getProducto().getIdProducto()+ "where idDetalle=" +dato.getIdDetalle();
-        try{
-            conectar();
-            sentencia.executeUpdate(query);
-        }catch(Exception e){
-            System.out.println("Error al modificar DCompras");
-        }finally{
-            desconectar();
+    public void agregar(DCompras dato, int idFactura) {
+        String query = "INSERT INTO DCOMPRAS(facturaID, importe, cantidad, productoid) values (" + idFactura + "," + dato.getImporte() + "," + dato.getCantidad() + "," + dato.getProducto().getIdProducto() + ")";
+        try {
+            int filas = actualizar(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    public void eliminar(DCompras dato) {
-        String query= "DELETE PROM DCompras WHERE idDetalle=" +dato.getIdDetalle();
-        try{
-            conectar();
-            sentencia.executeQuery(query);
-        }catch(Exception ex){
-            System.out.println("Error al eliminar DCompras");
-        }finally{
-            desconectar();
+    public void modificar(DCompras dato, int idFactura) {
+        String query = "Update DCompras set importe= " + dato.getImporte() + ",cantidad=" + dato.getCantidad() + "where productoid=" + dato.getProducto().getIdProducto() + "and facturaId = " + idFactura;
+        try {
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    public DCompras buscarByID(int id) {
-        DCompras dcompras= new DCompras();
-        int idUsuario;
-        String query="SELECT * FROM DCOMPRAS WHERE IdDetalle=" +id;        
+    public void eliminar(DCompras dato, int idFactura) {
+        try {
+            String query = "DELETE PROM DCompras WHERE productoid=" + dato.getProducto().getIdProducto() + "and facturaid=" + idFactura;
+            ejecutarQuery(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public DCompras buscarByID(int idProducto, int idFactura) {
+        String query = "SELECT * FROM DCOMPRAS WHERE productoid=" + idProducto + "and facturaid=" + idFactura;
+        DCompras detalle = new DCompras();
+        int idProd = 0;
         try {
             conectar();
-            resultado= sentencia.executeQuery(query);
-                while(resultado.next()){
-                   dcompras.setIdDetalle(resultado.getInt(1));
-                   dcompras.setImporte(resultado.getDouble(2));
-                   dcompras.setCantidad(resultado.getInt(3));
-                   dcompras.setProducto(prodDao.buscarByID(resultado.getInt(4)));
+            ResultSet rs = consultar(crearSentencia(query));
+            while (rs.next()) {
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setImporte(rs.getDouble("precio"));
+                idProd = rs.getInt("productoid");
+                detalle.setProducto(prodDao.buscarByID(idProd));
             }
+
         } catch (Exception ex) {
-            System.out.println("No se pudo obtener DCompras"+ ex.getMessage());
-        }finally{
-            desconectar();
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return detalle;
+    }
+
+    public Enumeration traeDetalleDeFactura(CCompras cCom) {
+        Hashtable hash = new Hashtable();
+        String query = "SELECT * FROM DCOMPRAS WHERE facturaid= " + cCom.getIdFactura();
+        try {
+            conectar();
+            ResultSet rs = consultar(crearSentencia(query));
+            while (rs.next()) {
+
+                DCompras DC = new DCompras();
+                DC.setCantidad(rs.getInt("Cantidad"));
+                DC.setImporte(rs.getDouble("importe"));
+                int idProducto = rs.getInt("ProductoID");
+                Producto p = prodDao.buscarByID(idProducto);
+                DC.setProducto(p);
+                hash.put(rs.getInt("IDDetalle"), DC);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(usuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return dcompras;
+       return hash.elements();
     }
 
-    @Override
-    public Enumeration<DCompras> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
-    @Override
-    public void agregar(DCompras dato) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    public void agregar(DCompras dato, int idFactura){
-        String query="INSERT INTO DCOMPRAS(facturaID, importe, cantidad, productoid) values ("+idFactura + ","+ dato.getImporte() +","+dato.getCantidad()+","+dato.getProducto().getIdProducto()+")";
-        try {
-            int filas= actualizar(crearSentencia(query));
-        } catch (Exception ex) {
-            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public void modificar(DCompras dato) {
-        String query="Update DCompras set importe= "+ dato.getImporte() + ",cantidad=" + dato.getcCompras()+",productoid="+ dato.getProducto().getIdProducto()+ "where idDetalle=" +dato.getIdDetalle();
-        try {
-            ejecutarQuery(crearSentencia(query));
-        } catch (Exception ex) {
-            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public void eliminar(DCompras dato) {
-        try {
-            String query= "DELETE PROM DCompras WHERE idDetalle=" +dato.getIdDetalle();
-            ejecutarQuery(crearSentencia(query));
-        } catch (Exception ex) {
-            Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public DCompras buscarByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Enumeration<DCompras> traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-   
-    
 }
+
+
