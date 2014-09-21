@@ -16,7 +16,7 @@
 	font-weight: 700;
 }
 .ui-bar-a, .ui-bar-a input, .ui-bar-a select, .ui-bar-a textarea, .ui-bar-a button {
-	font-family: Tahoma, Geneva, sans-serif!important;
+	font-family: Arial, Geneva, sans-serif!important;
 }
 .ui-bar-a .ui-link-inherit {
 	color: #282828
@@ -36,7 +36,7 @@
 }
 .ui-body-a, .ui-overlay-a {
 	border: 1px solid #282828;
-	background: #ffcc00;
+	background: #ffc;
 	color: #282828;
 	font-weight: 400;
 }
@@ -45,7 +45,7 @@
 	border-width: 0
 }
 .ui-body-a, .ui-body-a input, .ui-body-a select, .ui-body-a textarea, .ui-body-a button {
-	font-family: Tahoma, Geneva, sans-serif!important;
+	font-family: Arial, Geneva, sans-serif!important;
 }
 .ui-body-a .ui-link-inherit {
 	color: #282828
