@@ -62,7 +62,7 @@ public class BASEDAO {
             return res;
         } catch (SQLException e)
         {
-            throw new Exception("Error al ejecutar sentencia \n codigo" + e.getErrorCode() + "Explicacion:" + e.getMessage());
+            throw new Exception("Error al ejecutar sentencia \n codigo " + e.getErrorCode() + "Explicacion:" + e.getMessage());
         }
     }
     

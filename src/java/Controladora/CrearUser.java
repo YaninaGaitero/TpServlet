@@ -223,7 +223,11 @@ public class CrearUser extends HttpServlet {
                     + "			</div>\n"
                     + "			<center><div>\n"
                     + "            <div>\n"
-                    + "                <input type=\"checkbox\" name=\"Administrador\" value=\"Administrador\">Administrador<br>\n"
+                    + "                <select name = \"list\"> \n"
+                    + "                    <option value=\"Administrador\">administrador</option>\n"
+                    + "                    <option value=\"Comun\">comun</option>\n"
+                    + "                    \n"
+                    + "                </select>"
                     + "                \n"
                     + "            </div>\n"
                     + "				\n"
@@ -281,7 +285,8 @@ public class CrearUser extends HttpServlet {
             AltaUser.setNombre(request.getParameter("Nombre"));
             AltaUser.setUser(request.getParameter("Username"));
             AltaUser.setActivo(true);
-            if (Boolean.valueOf(request.getParameter("Administrador"))) {
+            String Administrador = request.getParameter("list");
+            if (Administrador.equals("Administrador")) {
                 AltaUser.setAdministrador(true);
             } else {
                 AltaUser.setAdministrador(false);
