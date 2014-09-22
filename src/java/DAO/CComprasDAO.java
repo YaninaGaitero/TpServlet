@@ -45,6 +45,7 @@ public class CComprasDAO extends BASEDAO implements IDAO<CCompras> {
     public void agregar(CCompras dato) {
        String query="INSERT INTO CCOMPRAS(usuarioID, fecha) values("+dato.getUsuario().getIdUsuario() +","+dato.getFecha() +")";
         try {
+            conectar();
             int filas= actualizar(crearSentencia(query));
         } catch (Exception ex) {
             Logger.getLogger(CComprasDAO.class.getName()).log(Level.SEVERE, null, ex);

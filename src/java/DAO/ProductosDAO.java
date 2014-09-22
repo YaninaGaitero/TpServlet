@@ -39,6 +39,7 @@ public class ProductosDAO extends BASEDAO implements IDAO<Producto>{
     public void agregar(Producto dato) {
         String query= "INSERT INTO PRODUCTOS (DESCRIPCION, PRECIO, STOCK) VALUES ('" +dato.getDescripcion() +"'," + dato.getPrecio() + "," +dato.getStock()+")";
         try {
+             conectar();
             int filas= actualizar(crearSentencia(query));
         } catch (Exception ex) {
             Logger.getLogger(ProductosDAO.class.getName()).log(Level.SEVERE, null, ex);
