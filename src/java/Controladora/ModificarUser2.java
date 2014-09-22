@@ -9,8 +9,6 @@ import DAO.usuarioDAO;
 import Entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -24,11 +22,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ezequiel
  */
-@WebServlet(name = "ModificarUser", urlPatterns = {"/ModificarUser"})
-public class ModificarUser extends HttpServlet {
-
-    usuarioDAO usDao = usuarioDAO.DameInstancia();
-    Hashtable Users = usDao.traerTodos();
+@WebServlet(name = "ModificarUser2", urlPatterns = {"/ModificarUser2"})
+public class ModificarUser2 extends HttpServlet {
+    usuarioDAO DaoUser = usuarioDAO.DameInstancia();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +39,13 @@ public class ModificarUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession(true);
+        Usuario user = (Usuario) session.getAttribute("UsuarioAmodificar");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>\n"
-                    + "<!--[if lt IE 7 ]> <html lang=\"en\" class=\"ie6 ielt8\"> <![endif]-->\n"
-                    + "<!--[if IE 7 ]>    <html lang=\"en\" class=\"ie7 ielt8\"> <![endif]-->\n"
-                    + "<!--[if IE 8 ]>    <html lang=\"en\" class=\"ie8\"> <![endif]-->\n"
-                    + "<!--[if (gte IE 9)|!(IE)]><!-->\n"
-                    + "<html lang=\"es\"><!--<![endif]--><head>\n"
+            out.println("<!DOCTYPE html>");
+            out.println("<html lang=\"es\"><!--<![endif]--><head>\n"
                     + "<script type=\"text/javascript\">\n"
                     + "    function ValidaUsr()\n"
                     + "    {\n"
@@ -202,84 +198,31 @@ public class ModificarUser extends HttpServlet {
                     + "<body>\n"
                     + "<div class=\"container\">\n"
                     + "	<section id=\"content\">\n"
-                    + "		<form action=\"ModificarUser\" name=\"ModificaUser\" method=\"POST\">\n"
-                    + "            <div>\n"
-                    + "	<table >\n"
-                    + "                    <tr >\n"
-                    + "                        <td >\n"
-                    + "                            idUsuario\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            nombre\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            apellido\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            dni\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            Usuario\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            Administrador\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            activo\n"
-                    + "                        </td>\n"
-                    + "                       <td>"
-                    + "                             MODIFICAR"
-                    + "                       </td>"
-                    + "                    </tr>   \n");
-            Enumeration Datos = Users.elements();
-            while (Datos.hasMoreElements()) {
-                Usuario us = (Usuario) Datos.nextElement();
-                out.println("<tr>");
-                out.println("  <td>");
-                out.println(us.getIdUsuario());
-                out.println("   </td>");
-                out.println("  <td>");
-                out.println(us.getNombre());
-                out.println("   </td>");
-                out.println("  <td>");
-                out.println(us.getApellido());
-                out.println("   </td>");
-                out.println("  <td>");
-                out.println(us.getDni());
-                out.println("   </td>");
-                out.println("  <td>");
-                out.println(us.getUser());
-                out.println("   </td>");
-                out.println("  <td>");
-                if (us.getAdministrador()) {
-                    out.println("Si");
-                } else {
-                    out.println("No");
-                }
-                out.println("   </td>");
-                out.println("  <td>");
-                if (us.getActivo()) {
-                    out.println("Si");
-                } else {
-                    out.println("No");
-                }
-                out.println("   </td>");
-                out.println("<td>");
-                out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
-                out.println("</tr>");
-
-            }
-            out.println("              </table>\n"
+                    + "		<form action=\"ModificarUser2\" name=\"ModificarUser\" method=\"POST\">\n"
+                    + "			<div>\n"
+                    + "                <input placeholder=\"Nombre\" required=\"\" name=\"Nombre\" type=\"text\" value=\"" + user.getNombre() + "\">\n"
                     + "            </div>\n"
-                    + "            <center>\n"
-                    + "                </div>\n"
-                    + "    				\n"
-                    + "                    <input value=\"ENVIAR DATOS\" name =\"enviardatos\" type=\"submit\">\n"
-                    + "                        \n"
-                    + "                    \n"
                     + "\n"
-                    + "    			</div> \n"
-                    + "            </center>  \n"
+                    + "            <div>\n"
+                    + "                <input placeholder=\"Apellido\" required=\"\" name=\"Apellido\" type=\"text\" value=\""+ user.getApellido() + "\">\n"
+                    + "            </div>\n"
+                    + "\n"
+                    + "            <div>\n"
+                    + "                <input placeholder=\"DNI\" required=\"\" name=\"DNI\" type=\"text\" value=\""+ user.getDni()+ "\">\n"
+                    + "            </div>\n"
+                    + "\n"
+                    + "            <div>\n"
+                    + "				<input placeholder=\"Usuario\" required=\"\" name=\"Username\" type=\"text\" value=\""+ user.getUser()+ "\">\n"
+                    + "			</div>\n"
+                    + "			<div>\n"
+                    + "				<input placeholder=\"Contraseña\" required=\"\" name=\"password\" type=\"password\" value=\""+ user.getContraseña()+ "\">\n"
+                    + "			</div>\n"
+                    + "			<center><div>\n"
+                    + "            <div>\n"
+                    + "            </div>\n"
+                    + "                    <input value=\"GUARDAR DATOS\" name =\"guardardatos\" type=\"submit\">\n"
+                    + "\n"
+                    + "			</div> </center>  \n"
                     + "		</form><!-- form -->\n"
                     + "		<div class=\"button\">\n"
                     + "			\n"
@@ -288,6 +231,9 @@ public class ModificarUser extends HttpServlet {
                     + "</div><!-- container -->\n"
                     + "\n"
                     + "</body></html>");
+            
+            session.removeAttribute("UsuarioAmodificar");
+        
         }
     }
 
@@ -318,15 +264,21 @@ public class ModificarUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
-            HttpSession session = request.getSession();
-            session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
-            response.sendRedirect("ModificarUser2");
+            Usuario usrReg = new Usuario();
+            
+            usrReg.setApellido(request.getParameter("Apellido"));
+            usrReg.setContraseña(request.getParameter("password"));
+            usrReg.setDni(Integer.parseInt(request.getParameter("DNI")));
+            usrReg.setNombre(request.getParameter("Nombre"));
+            usrReg.setUser(request.getParameter("Username"));
+            DaoUser.modificar(usrReg);
+            
+            
         } catch (Exception ex) {
-            Logger.getLogger(ModificarUser.class
+            Logger.getLogger(Registro.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     /**
