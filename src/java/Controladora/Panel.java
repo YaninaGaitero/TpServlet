@@ -95,7 +95,7 @@ public class Panel extends HttpServlet {
                     + "                                    <a href=\"video-gallery.html\" rel=\"external\">- BAJA</a>\n"
                     + "                                </li>\n"
                     + "                                <li>\n"
-                    + "                                    <a href=\"ModificarUser\" rel=\"external\">- MODIFICAR</a>\n"
+                    + "                                    <a href=\"ModifyUser\" rel=\"external\">- MODIFICAR</a>\n"
                     + "                                </li>\n"
                     + "                            </ul>\n"
                     + "                        </li>\n"

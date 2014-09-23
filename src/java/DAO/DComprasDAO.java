@@ -45,6 +45,7 @@ public class DComprasDAO extends BASEDAO {
     public void agregar(DCompras dato, int idFactura) {
         String query = "INSERT INTO DCOMPRAS(facturaID, importe, cantidad, productoid) values (" + idFactura + "," + dato.getImporte() + "," + dato.getCantidad() + "," + dato.getProducto().getIdProducto() + ")";
         try {
+            conectar();
             int filas = actualizar(crearSentencia(query));
         } catch (Exception ex) {
             Logger.getLogger(DComprasDAO.class.getName()).log(Level.SEVERE, null, ex);

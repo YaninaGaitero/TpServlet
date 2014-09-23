@@ -40,19 +40,19 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
 
     @Override
     public void agregar(Usuario dato) {
-        
-        String sentencia = "Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, pass"
-                + ")values( " + dato.getActivo() + "," + dato.getActivo() + ",'"
-                + dato.getApellido() + "','" + dato.getNombre() + "'," + dato.getDni() + ",'" + dato.getUser() + "','" + dato.getContraseña() + "')";
         try {
+            conectar();
+            String sentencia = "Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, pass"
+                    + ")values( " + dato.getActivo() + "," + dato.getActivo() + ",'"
+                    + dato.getApellido() + "','" + dato.getNombre() + "'," + dato.getDni() + ",'" + dato.getUser() + "','" + dato.getContraseña() + "')";            
+                int y;
+                y = actualizar(crearSentencia(sentencia));
+                
+            } catch (Exception e) {
+                String Error = e.getMessage();
+                System.out.println(Error);
+            }
 
-            int y;
-            y = actualizar(crearSentencia(sentencia));
-
-        } catch (Exception e) {
-            String Error = e.getMessage();
-            System.out.println(Error);
-        }
     }
 
     @Override

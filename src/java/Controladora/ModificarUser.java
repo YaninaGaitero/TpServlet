@@ -75,7 +75,7 @@ public class ModificarUser extends HttpServlet {
             out.println("<body>\n"
                     + "<div class=\"container\">\n"
                     + "	<section id=\"content\">\n"
-                    + "		<form action=\"ModificarUser\" name=\"ModificaUser\" method=\"POST\">\n"
+                    + "		<form action=\"ModificarUser\" name=\"ModificarUser\" method=\"POST\">\n"
                     + "            <div>\n"
                     + "	<table >\n"
                     + "                    <tr >\n"
@@ -104,6 +104,7 @@ public class ModificarUser extends HttpServlet {
                     + "                             MODIFICAR"
                     + "                       </td>"
                     + "                    </tr>   \n");
+<<<<<<< HEAD
             /*    Enumeration Datos = Users.elements();
              while (Datos.hasMoreElements()) {
              Usuario us = (Usuario) Datos.nextElement();
@@ -141,6 +142,47 @@ public class ModificarUser extends HttpServlet {
              out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
              out.println("</tr>");
              }*/
+=======
+            Enumeration Datos = Users.elements();
+            while (Datos.hasMoreElements()) {
+                Usuario us = (Usuario) Datos.nextElement();
+                out.println("<tr>");
+                out.println("  <td>");
+                out.println(us.getIdUsuario());
+                out.println("   </td>");
+                out.println("  <td>");
+                out.println(us.getNombre());
+                out.println("   </td>");
+                out.println("  <td>");
+                out.println(us.getApellido());
+                out.println("   </td>");
+                out.println("  <td>");
+                out.println(us.getDni());
+                out.println("   </td>");
+                out.println("  <td>");
+                out.println(us.getUser());
+                out.println("   </td>");
+                out.println("  <td>");
+                if (us.getAdministrador()) {
+                    out.println("Si");
+                } else {
+                    out.println("No");
+                }
+                out.println("   </td>");
+                out.println("  <td>");
+                if (us.getActivo()) {
+                    out.println("Si");
+                } else {
+                    out.println("No");
+                }
+                out.println("   </td>");
+                out.println("<td>");
+                out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
+                out.println("</td>");
+                out.println("</tr>");
+
+            }
+>>>>>>> origin/master
             out.println("              </table>\n"
                     + "            </div>\n"
                     + "            <center>\n"
@@ -191,8 +233,15 @@ public class ModificarUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+<<<<<<< HEAD
            /* int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
             HttpSession session = request.getSession();
+=======
+            HttpSession session = request.getSession(true);
+            String idd = (String)request.getParameter("IdUsuario");
+            int Id = Integer.parseInt(idd);
+            
+>>>>>>> origin/master
             session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
             response.sendRedirect("ModificarUser2");*/
 
