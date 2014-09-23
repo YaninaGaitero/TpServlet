@@ -202,7 +202,7 @@ public class ModificarUser extends HttpServlet {
                     + "<body>\n"
                     + "<div class=\"container\">\n"
                     + "	<section id=\"content\">\n"
-                    + "		<form action=\"ModificarUser\" name=\"ModificaUser\" method=\"POST\">\n"
+                    + "		<form action=\"ModificarUser\" name=\"ModificarUser\" method=\"POST\">\n"
                     + "            <div>\n"
                     + "	<table >\n"
                     + "                    <tr >\n"
@@ -266,6 +266,7 @@ public class ModificarUser extends HttpServlet {
                 out.println("   </td>");
                 out.println("<td>");
                 out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
+                out.println("</td>");
                 out.println("</tr>");
 
             }
@@ -318,7 +319,8 @@ public class ModificarUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
+            String idd = (String)request.getAttribute("IdUsuario");
+            int Id = Integer.parseInt(idd);
             HttpSession session = request.getSession();
             session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
             response.sendRedirect("ModificarUser2");
