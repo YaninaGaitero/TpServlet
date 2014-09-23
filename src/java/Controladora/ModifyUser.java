@@ -315,8 +315,9 @@ public class ModifyUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          try {
+             HttpSession session = request.getSession(true);
             int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
-            HttpSession session = request.getSession();
+            
             session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
             response.sendRedirect("ModificarUser2");
         } catch (Exception ex) {
