@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Controladora;
 
 import java.io.IOException;
@@ -35,14 +34,11 @@ public class Panel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         HttpSession session = request.getSession(true);
         String mensaje = "";
         try {
-                
-                
-               
-            
+
             out.println("<html>\n"
                     + "    <head>\n"
                     + "        <meta charset=\"utf-8\">\n"
@@ -63,15 +59,12 @@ public class Panel extends HttpServlet {
                     + "        <!-- Glyphicons -->\n"
                     + "        <script type=\"text/javascript\" async src=\"js/glyphicons/ga.js\"></script>\n"
                     + "    </head>");
-            
-            if (session.getAttribute("mensaje") != null) 
-            {
+
+            if (session.getAttribute("mensaje") != null) {
                 mensaje = session.getAttribute("mensaje").toString();
                 out.println("<br><br> <center>" + mensaje + "</center> <br><br>");
             }
-                   out.println("<body>\n"
-                    + "        <!-- Page Contents Starts\n"
-                    + "            ================================================== -->\n"
+            out.println("<body>\n"
                     + "        <div data-role=\"page\" id=\"page\" data-theme=\"a\">\n"
                     + "            <!-- header Starts -->\n"
                     + "            <div data-role=\"header\" data-theme=\"f\" class=\"header\">\n"
@@ -86,7 +79,6 @@ public class Panel extends HttpServlet {
                     + "                    <h1><span class=\"normal\">Bievenido " + (String) session.getAttribute("usuario") + "</h1> \n"
                     + "                </div>\n"
                     + "            </div>\n"
-                    + "\n"
                     + "            <div data-role=\"panel\" id=\"left-panel\" data-theme=\"g\">\n"
                     + "                <div id=\"accordion\">\n"
                     + "                    <ul id=\"items\">\n"
@@ -179,13 +171,9 @@ public class Panel extends HttpServlet {
                     + "        <script src=\"js/Retina/retina.js\"></script>\n"
                     + "    </body>\n"
                     + "</html>");
-        }
-        
-        
-        finally
-        {
+        } finally {
             out.close();
-        }   
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
