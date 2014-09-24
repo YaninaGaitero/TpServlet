@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Controladora.ModificarUser;
 import Entidades.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
     @Override
     public void agregar(Usuario dato) {
         try {
-            conectar();
+           
             String sentencia = "Insert into usuarios (activo , administrador , apellido, nombre, dni, usuario, pass"
                     + ")values( " + dato.getActivo() + "," + dato.getActivo() + ",'"
                     + dato.getApellido() + "','" + dato.getNombre() + "'," + dato.getDni() + ",'" + dato.getUser() + "','" + dato.getContraseña() + "')";            
@@ -57,11 +58,15 @@ public class usuarioDAO extends BASEDAO implements IDAO<Usuario> {
 
     @Override
     public void modificar(Usuario dato) {
-        String query = "UPDATE USUARIOS SET nombre = '" + dato.getNombre() + "',apellido = '" + dato.getApellido() + "',administrador= " + dato.getAdministrador() + ", dni= '" + dato.getDni() + ", activo = " + dato.getActivo() + " where idUsuario= " + dato.getIdUsuario();
+        String query = "UPDATE usuarios SET nombre = '" + dato.getNombre() + "',apellido = '" + dato.getApellido() + "',administrador= " + 1+ ", dni=  " + dato.getDni() + ", activo = " + 1 + " where idUsuario= " + dato.getIdUsuario();
         try {
-            ejecutarQuery(crearSentencia(query));
-        } catch (Exception e) {
-
+            conectar();
+            actualizar(crearSentencia(query));
+        } catch (Exception ex) {
+            Logger.getLogger(ModificarUser.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            desconectar();
         }
 
     }

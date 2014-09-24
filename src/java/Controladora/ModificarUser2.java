@@ -40,11 +40,11 @@ public class ModificarUser2 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         Usuario user = (Usuario) session.getAttribute("UsuarioAmodificar");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
+            //out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\"><!--<![endif]--><head>\n"
                     + "<script type=\"text/javascript\">\n"
                     + "    function ValidaUsr()\n"
@@ -194,8 +194,8 @@ public class ModificarUser2 extends HttpServlet {
                     + "    position: fixed !important;\n"
                     + "    pointer-events: auto !important;\n"
                     + "}\n"
-                    + "</style></head>\n"
-                    + "<body>\n"
+                    + "</style></head>\n");
+                    out.println( "<body>\n"
                     + "<div class=\"container\">\n"
                     + "	<section id=\"content\">\n"
                     + "		<form action=\"ModificarUser2\" name=\"ModificarUser\" method=\"POST\">\n"
@@ -218,11 +218,9 @@ public class ModificarUser2 extends HttpServlet {
                     + "				<input placeholder=\"Contraseña\" required=\"\" name=\"password\" type=\"password\" value=\""+ user.getContraseña()+ "\">\n"
                     + "			</div>\n"
                     + "			<center><div>\n"
-                    + "            <div>\n"
-                    + "            </div>\n"
                     + "                    <input value=\"GUARDAR DATOS\" name =\"guardardatos\" type=\"submit\">\n"
                     + "\n"
-                    + "			</div> </center>  \n"
+                    + "			</div> </center>  \n"                       
                     + "		</form><!-- form -->\n"
                     + "		<div class=\"button\">\n"
                     + "			\n"
@@ -232,8 +230,7 @@ public class ModificarUser2 extends HttpServlet {
                     + "\n"
                     + "</body></html>");
             
-            session.removeAttribute("UsuarioAmodificar");
-        
+            
         }
     }
 
@@ -249,7 +246,7 @@ public class ModificarUser2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
@@ -263,9 +260,13 @@ public class ModificarUser2 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+            HttpSession session= request.getSession(true);
         try {
             Usuario usrReg = new Usuario();
             
+            Usuario usu= (Usuario) session.getAttribute("UsuarioAmodificar");
+            usrReg.setIdUsuario(usu.getIdUsuario());
             usrReg.setApellido(request.getParameter("Apellido"));
             usrReg.setContraseña(request.getParameter("password"));
             usrReg.setDni(Integer.parseInt(request.getParameter("DNI")));

@@ -111,7 +111,7 @@ public class Panel extends HttpServlet {
                     + "                            <a href=\"#\"></i>PRODUCTOS</a>\n"
                     + "                            <ul class=\"sub-items\">\n"
                     + "                                <li>\n"
-                    + "                                    <a href=\"3-columns-portfolio.html\" rel=\"external\">-  HISTORIAL</a>\n"
+                    + "                                    <a href=\"Carrito\" rel=\"external\">-  VER PRODUCTOS</a>\n"
                     + "                                </li>\n"
                     + "                                <li>\n"
                     + "                                    <a href=\"2-columns-portfolio.html\" rel=\"external\">- 2 COLUMNS</a>\n"

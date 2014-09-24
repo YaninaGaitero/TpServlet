@@ -56,13 +56,16 @@ public class BASEDAO {
     {
         try
         {
+            
             conectar();
             int res = sentencia.executeUpdate();
-            desconectar();
             return res;
         } catch (SQLException e)
         {
             throw new Exception("Error al ejecutar sentencia \n codigo " + e.getErrorCode() + "Explicacion:" + e.getMessage());
+        }
+        finally{
+            desconectar();
         }
     }
     
@@ -72,12 +75,15 @@ public class BASEDAO {
         {
             conectar();
             sentencia.executeQuery();
-            desconectar();
             
         } catch (Exception e)
         {
             throw new Exception("Error al ejecutar consulta" + e.getMessage());
         }
+        finally{
+            desconectar();
+        }
+        
     }
 
     
@@ -87,11 +93,13 @@ public class BASEDAO {
         {
             conectar();
             s.executeQuery();
-            desconectar();
         }
         catch (Exception e)
                 {
                 }
+        finally{
+            desconectar();
+        }
     }
 
     public ResultSet consultar(PreparedStatement sentencia) throws Exception
@@ -100,11 +108,12 @@ public class BASEDAO {
         {
             conectar();
             ResultSet rows = sentencia.executeQuery();
-            desconectar();
             return rows;
         } catch (SQLException e)
         {
             throw new SQLException("Error al ejecutar consulta" + e.getMessage());
+        }finally{
+            desconectar();
         }
     }
 

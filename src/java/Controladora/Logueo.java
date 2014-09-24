@@ -276,7 +276,6 @@ public class Logueo extends HttpServlet {
             throws ServletException, IOException 
     {
         HttpSession session = request.getSession();
-        //processRequest(request, response);
         String nombre = request.getParameter("Usuario");
         String password =request.getParameter("Pass");
         Boolean rta =datosUsr.validaLogIn(request.getParameter("Usuario"), request.getParameter("Pass") );

@@ -5,31 +5,30 @@
  */
 package Controladora;
 
+import DAO.ProductosDAO;
 import DAO.usuarioDAO;
+import Entidades.Producto;
 import Entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Ezequiel
+ * @author Yanina
  */
-@WebServlet(name = "ModificarUser", urlPatterns = {"/ModificarUser"})
-public class ModificarUser extends HttpServlet {
+@WebServlet(name = "Carrito", urlPatterns = {"/Carrito"})
+public class Carrito extends HttpServlet {
 
-    usuarioDAO usDao = usuarioDAO.DameInstancia();
-    Hashtable Users = usDao.traerTodos();
+    ProductosDAO ProductDAO =  ProductosDAO.dameInstancia();
+    Hashtable Product = ProductDAO.traerTodos();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -199,101 +198,75 @@ public class ModificarUser extends HttpServlet {
                     + "    position: fixed !important;\n"
                     + "    pointer-events: auto !important;\n"
                     + "}\n"
-                    + "</style></head>\n"
-                    + "<body>\n"
-                    + "<div class=\"container\">\n"
-                    + "	<section id=\"content\">\n"
-                    + "		<form action=\"ModificarUser\" name=\"ModificarUser\" method=\"POST\">\n"
-                    + "            <div>\n"
-                    + "	<table >\n"
-                    + "                    <tr >\n"
-                    + "                        <td >\n"
-                    + "                            idUsuario\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            nombre\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            apellido\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            dni\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            Usuario\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            Administrador\n"
-                    + "                        </td>\n"
-                    + "                        <td>\n"
-                    + "                            activo\n"
-                    + "                        </td>\n"
-                    + "                       <td>"
-                    + "                             MODIFICAR"
-                    + "                       </td>"
-                    + "                    </tr>   \n");
-            Enumeration Datos = Users.elements();
+                    + "</style></head>\n");
+            out.println("<body>               \n"
+                    + "                                          <div class = \"container\" >   \n"
+                    + "                                           <section id = \"content\" >   \n"
+                    + "                                                <form action = \"ModificarUser\"  name = \"ModificaUser\"  method= \"POST\" >   \n"
+                    + "                                                      <div>   \n"
+                    + "                                                        <table >   \n"
+                    + "                                                              <tr >   \n"
+                    + "                                                                  <td >   \n"
+                    + "                                                                      Codigo   \n"
+                    + "                                                                  </td>   \n"
+                    + "                                                                  <td>   \n"
+                    + "                                                                      Descripcion   \n"
+                    + "                                                                  </td>   \n"
+                    + "                                                                  <td>   \n"
+                    + "                                                                      Precio   \n"
+                    + "                                                                  </td>   \n"
+                    + "                                                                  <td>   \n"
+                    + "                                                                      \n"
+                    + "                                                                      <div>\n"
+                    + "                                                                      <input type=\"text\" name= \"cantidad\" value= \"\"> \n"
+                    + "                                                                      </div>  \n"
+                    + "                                                                  </td>   \n"
+                    + "                                                                    \n"
+                    + "                                                                 <td> \n"
+                    + "                                                                       Cargar \n"
+                    + "                                                                       </div>  \n"
+                    + "                                                 <div class = \"button\" >  \n"
+                    + "                                                 <input type = \"submit\" value =  \"ENVIAR\" name = \"IdUsuario\" />           \n"
+                    + "                                                 </div>\n"
+                    + "                                                                 </td> \n"
+                    + "                                                              </tr> \n");
+                    
+            Enumeration Datos = Product.elements();
             while (Datos.hasMoreElements()) {
-                Usuario us = (Usuario) Datos.nextElement();
+                Producto prod = (Producto) Datos.nextElement();
                 out.println("<tr>");
                 out.println("  <td>");
-                out.println(us.getIdUsuario());
+                out.println(prod.getIdProducto());
                 out.println("   </td>");
                 out.println("  <td>");
-                out.println(us.getNombre());
+                out.println(prod.getDescripcion());
                 out.println("   </td>");
                 out.println("  <td>");
-                out.println(us.getApellido());
+                out.println(prod.getPrecio());
                 out.println("   </td>");
                 out.println("  <td>");
-                out.println(us.getDni());
+                out.println("<input type=\"text\" name= \"cantidad\" value= \""+ prod.getIdProducto() +"\">");
                 out.println("   </td>");
-                out.println("  <td>");
-                out.println(us.getUser());
-                out.println("   </td>");
-                out.println("  <td>");
-                if (us.getAdministrador()) {
-                    out.println("Si");
-                } else {
-                    out.println("No");
-                }
-                out.println("   </td>");
-                out.println("  <td>");
-                if (us.getActivo()) {
-                    out.println("Si");
-                } else {
-                    out.println("No");
-                }
-                out.println("   </td>");
-                out.println("<td>");
-                out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
-                out.println("</td>");
-                out.println("</tr>");
-
+                out.println("<tr>");
             }
-            out.println("              </table>\n"
-                    + "            </div>\n"
-                    + "            <center>\n"
-                    + "                </div>\n"
-                    + "    				\n"
-                    + "                    <input value=\"ENVIAR DATOS\" name =\"enviardatos\" type=\"submit\">\n"
-                    + "                        \n"
-                    + "                    \n"
-                    + "\n"
-                    + "    			</div> \n"
-                    + "            </center>  \n"
-                    + "		</form><!-- form -->\n"
-                    + "		<div class=\"button\">\n"
-                    + "			\n"
-                    + "		</div><!-- button -->\n"
-                    + "	</section><!-- content -->\n"
-                    + "</div><!-- container -->\n"
-                    + "\n"
-                    + "</body></html>");
-        }finally{
+                
+                out.println("</table>    \n" +
+"                                                   </div>  \n" +
+"                                              <center>   \n" +
+"                                                    <div>                                    \n" +
+"                                              \n" +
+"                                                       \n" +
+"                                              </center>     \n" +
+"                                                   </form><!-- form -->  \n" +
+"                                              </div>     \n" +
+"                                            </section><!-- content -->   \n" +
+"                                          </div><!-- container -->      \n" +
+"                                          </body></html>     ");
+        } finally{
             out.close();
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -321,18 +294,7 @@ public class ModificarUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession(true);
-            String idd = (String)request.getParameter("IdUsuario");
-            int Id = Integer.parseInt(idd);
-            Usuario u= usDao.buscarByID(Id);
-            session.setAttribute("UsuarioAmodificar", u);
-            response.sendRedirect("ModificarUser2");
-        } catch (Exception ex) {
-            Logger.getLogger(ModificarUser.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
     }
 
     /**
