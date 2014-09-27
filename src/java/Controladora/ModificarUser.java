@@ -48,7 +48,11 @@ public class ModificarUser extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<html>\n"
+<<<<<<< HEAD
              + "    <head>\n"
+=======
+            /* + "    <head>\n"
+>>>>>>> origin/master
              + "        <meta charset=\"utf-8\">\n"
              + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
              + "        <title>BIENVENIDA A NUESTRA FERRETERIA</title>\n"
@@ -66,7 +70,11 @@ public class ModificarUser extends HttpServlet {
              + "        <script src=\"js/jquery.mobile-1.3.2.min.js\"></script>\n"
              + "        <!-- Glyphicons -->\n"
              + "        <script type=\"text/javascript\" async src=\"js/glyphicons/ga.js\"></script>\n"
+<<<<<<< HEAD
              + "    </head>");
+=======
+             + "    </head>"*/);
+>>>>>>> origin/master
 
             if (session.getAttribute("mensaje") != null) {
                 mensaje = session.getAttribute("mensaje").toString();
@@ -105,7 +113,11 @@ public class ModificarUser extends HttpServlet {
                     + "                             MODIFICAR"
                     + "                       </td>"
                     + "                    </tr>   \n");
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
             /*    Enumeration Datos = Users.elements();
              while (Datos.hasMoreElements()) {
              Usuario us = (Usuario) Datos.nextElement();
@@ -143,7 +155,11 @@ public class ModificarUser extends HttpServlet {
              out.println("<input type =\"submit\" value = \"" + us.getIdUsuario() + "\" name=\"IdUsuario\"/>");
              out.println("</tr>");
              }*/
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> origin/master
             Enumeration Datos = Users.elements();
             while (Datos.hasMoreElements()) {
                 Usuario us = (Usuario) Datos.nextElement();
@@ -183,6 +199,7 @@ public class ModificarUser extends HttpServlet {
                 out.println("</tr>");
 
             }
+>>>>>>> origin/master
             out.println("              </table>\n"
                     + "            </div>\n"
                     + "            <center>\n"
@@ -235,6 +252,7 @@ public class ModificarUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+<<<<<<< HEAD
 
  /*int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
             HttpSession session = request.getSession();*/
@@ -247,6 +265,19 @@ public class ModificarUser extends HttpServlet {
             response.sendRedirect("ModificarUser2");
             session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
             response.sendRedirect("ModificarUser2");
+=======
+<<<<<<< HEAD
+           /* int Id = Integer.parseInt((String) request.getAttribute("IdUsuario"));
+            HttpSession session = request.getSession();
+=======
+            HttpSession session = request.getSession(true);
+            String idd = (String)request.getParameter("IdUsuario");
+            int Id = Integer.parseInt(idd);
+            
+>>>>>>> origin/master
+            session.setAttribute("UsuarioAmodificar", usDao.buscarByID(Id));
+            response.sendRedirect("ModificarUser2");*/
+>>>>>>> origin/master
 
         } catch (Exception ex) {
             Logger.getLogger(ModificarUser.class
